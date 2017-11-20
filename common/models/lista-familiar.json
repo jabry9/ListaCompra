@@ -1,0 +1,39 @@
+{
+  "name": "ListaFamiliar",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "Nombre": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "Propietario": {
+      "type": "belongsTo",
+      "model": "Usuario",
+      "foreignKey": "Owner"
+    },
+    "productos": {
+      "type": "hasMany",
+      "model": "Producto",
+      "foreignKey": ""
+    },
+    "Solicitud": {
+      "type": "hasAndBelongsToMany",
+      "model": "Usuario",
+      "foreignKey": ""
+    },
+    "participantes": {
+      "type": "hasMany",
+      "model": "Producto",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

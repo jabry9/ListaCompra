@@ -14,25 +14,37 @@
     ]
   },
   "User": {
-    "dataSource": "db"
+    "dataSource": "DbLista"
   },
   "AccessToken": {
-    "dataSource": "db",
+    "dataSource": "DbLista",
     "public": false
   },
   "ACL": {
-    "dataSource": "db",
+    "dataSource": "DbLista",
     "public": false
   },
   "RoleMapping": {
-    "dataSource": "db",
+    "dataSource": "DbLista",
     "public": false,
     "options": {
       "strictObjectIDCoercion": true
     }
   },
   "Role": {
-    "dataSource": "db",
+    "dataSource": "DbLista",
     "public": false
+  },
+  "ListaFamiliar": {
+    "dataSource": "DbLista",
+    "public": true
+  },
+  "Usuario": {
+    "dataSource": "DbLista",
+    "public": true
+  },
+  "Producto": {
+    "dataSource": "DbLista",
+    "public": true
   }
 }
