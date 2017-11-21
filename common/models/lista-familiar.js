@@ -6,7 +6,6 @@ module.exports = function (Listafamiliar) {
         next();
     });
         Listafamiliar.afterRemote('create', function (context, listaFamiliar, next) {
-        //context.args.data.Owner = context.req.accessToken.userId;
         var app = Listafamiliar.app;
         var Usuario = app.models.Usuario;
         var IdUser = context.req.accessToken.userId;
