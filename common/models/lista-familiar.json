@@ -23,7 +23,7 @@
       "model": "Producto",
       "foreignKey": ""
     },
-    "Solicitud": {
+    "solicitud": {
       "type": "hasAndBelongsToMany",
       "model": "Usuario",
       "foreignKey": ""
@@ -49,5 +49,26 @@
       "property": "create"
     }
   ],
-  "methods": {}
+  "methods": {
+    "prototype.Solicitar": {
+      "accepts": [
+            { "arg": "context", "type": "object", "http": { "source": "context" } }
+            ],
+      "returns": [
+        {
+          "arg": "reg",
+          "type": "object",
+          "root": true,
+          "description": "Es el objeto que vamos a recibir de vuelta"
+        }
+      ],
+      "description": "Vamos a crear una peticion para pertenecer a una lista",
+      "http": [
+        {
+          "path": "/solicitar",
+          "verb": "post"
+        }
+      ]
+    }
+  }
 }

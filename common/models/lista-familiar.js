@@ -5,11 +5,11 @@ module.exports = function (Listafamiliar) {
         context.args.data.Owner = context.req.accessToken.userId;
         next();
     });
-        Listafamiliar.afterRemote('create', function (context, listaFamiliar, next) {
+    Listafamiliar.afterRemote('create', function (context, listaFamiliar, next) {
         var app = Listafamiliar.app;
         var Usuario = app.models.Usuario;
         var IdUser = context.req.accessToken.userId;
-        
+
         Usuario.findById(IdUser, function (err, usr) {
             if (err)
                 return cb(err);
@@ -18,4 +18,29 @@ module.exports = function (Listafamiliar) {
             next();
         })
     });
+
+    /**
+     * Vamos a crear una peticion para pertenecer a una lista
+     * @param {Function(Error, object)} callback
+     */
+
+    Listafamiliar.prototype.Solicitar = function (context, callback) {
+        var reg = this;
+        var app = Listafamiliar.app;
+        var Usuario = app.models.Usuario;
+        var IdUser = context.req.accessToken.userId;
+        Usuario.findById(IdUser, function (err, usr) {
+            if (err)
+                return cb(err);
+
+            reg.solicitud.add(usr,
+                    function (err) {
+                        reg = usr + reg;
+                    });
+            callback(null, {listaFamiliarId: reg.id, usuarioId: usr.id});
+        })
+
+
+    };
+
 };
