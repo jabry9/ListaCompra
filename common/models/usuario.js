@@ -65,4 +65,61 @@ module.exports = function (Usuario) {
 
     };
 
+    /**
+     * le enviamos un identificador de usuario y, si ese usuario tiene alguna solicitud en la lista de la que es miembro el actualmente autenticado, esta solicitud será rechazada.
+     * @param {object} context 
+     * @param {Function(Error, array)} callback
+     */
+
+    Usuario.prototype.rechazarSolicitud = function (context, callback) {
+        var miembrosDeLaLista;
+        var usrAcp = this;
+        var listaselec = null;
+        var usrLogId = context.req.accessToken.userId;
+        var usrLogLsId = null;
+        var usrLogLs = null;
+        var app = Usuario.app;
+        var Listafamiliar = app.models.ListaFamiliar;
+
+        Usuario.findById(usrLogId, function (err, usrLog) {
+            if (err)
+                return cb(err);
+
+            if (usrLog.PerteneceId != null) {
+                usrLogLsId = usrLog.PerteneceId;
+
+                Listafamiliar.findById(usrLogLsId, function (err, usrLogLsO) {
+                    if (err)
+                        return cb(err);
+                    listaselec = usrLogLsO;
+                    usrLogLsO.solicitud.findById(usrAcp.id,
+                            function (err, usrAcpO) {
+                                if (usrAcpO != null) {
+                                    usrLogLsO.solicitud.remove(usrAcpO,
+                                            function (err) {
+                                                Usuario.find({where: {PerteneceId: usrLogLsId}}, function (err, listamiembros) {
+                                                    miembrosDeLaLista = listamiembros;
+                                                    callback(null, miembrosDeLaLista);
+                                                });
+                                            })
+
+                                } else {
+                                    Usuario.find({where: {PerteneceId: usrLogLsId}}, function (err, listamiembros) {
+                                        miembrosDeLaLista = listamiembros;
+                                        callback(null, miembrosDeLaLista);
+                                    });
+                                }
+                            });
+                })
+
+            } else {
+                Usuario.find({where: {PerteneceId: usrLogLsId}}, function (err, listamiembros) {
+                    miembrosDeLaLista = listamiembros;
+                    callback(null, miembrosDeLaLista);
+                });
+            }
+        })
+    };
+
+
 };

@@ -45,6 +45,13 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "aceptarSolicitudes"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "rechazarSolicitud"
     }
   ],
   "methods": {
@@ -71,6 +78,32 @@
         {
           "path": "/aceptarSolicitudes",
           "verb": "put"
+        }
+      ]
+    },
+    "prototype.rechazarSolicitud": {
+      "accepts": [
+        {
+          "arg": "context",
+          "type": "object",
+          "http": {
+            "source": "context"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "miembrosDeLaLista",
+          "type": "array",
+          "root": false,
+          "description": "Va a devolver un array con todos los miembros de la lista."
+        }
+      ],
+      "description": "le enviamos un identificador de usuario y, si ese usuario tiene alguna solicitud en la lista de la que es miembro el actualmente autenticado, esta solicitud será rechazada.",
+      "http": [
+        {
+          "path": "/rechazarSolicitud",
+          "verb": "delete"
         }
       ]
     }
