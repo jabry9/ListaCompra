@@ -37,6 +37,7 @@ module.exports = function (Listafamiliar) {
                     function (err) {
                         reg = usr + reg;
                     });
+                    
             callback(null, {listaFamiliarId: reg.id, usuarioId: usr.id});
         })
 
