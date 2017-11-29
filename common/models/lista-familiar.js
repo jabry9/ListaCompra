@@ -33,15 +33,26 @@ module.exports = function (Listafamiliar) {
             if (err)
                 return cb(err);
 
-            reg.solicitud.add(usr,
-                    function (err) {
-                        reg = usr + reg;
-                    });
-                    
-            callback(null, {listaFamiliarId: reg.id, usuarioId: usr.id});
+            usr.solicitud.findOne(function (err, peticionanterior) {
+                if (err)
+                    return cb(err);
+
+                if (peticionanterior == null) {
+                    reg.solicitud.add(usr,
+                            function (err, registro) {
+                                callback(null, registro);
+                            });
+                } else {
+                    peticionanterior.listaFamiliarId = reg.id;
+                    peticionanterior.save();
+                    callback(null, {id: peticionanterior.id, listaFamiliarId: reg.id, usuarioId: IdUser});
+                }
+            })
+
+
         })
-
-
     };
+
+
 
 };
