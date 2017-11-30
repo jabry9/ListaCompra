@@ -35,7 +35,6 @@ module.exports = function (Usuario) {
                                     usrAcpO.save(function (err) {
                                         usrLogLsO.solicitud.remove(usrAcpO,
                                                 function (err) {
-
                                                     Usuario.find({where: {PerteneceId: usrLogLsId}}, function (err, listamiembros) {
                                                         listaDeMiembros = listamiembros;
                                                         callback(null, listamiembros);
@@ -57,7 +56,6 @@ module.exports = function (Usuario) {
 
             } else {
                 Usuario.find({where: {PerteneceId: usrLogLsId}}, function (err, listamiembros) {
-                    listaDeMiembros = listamiembros;
                     callback(null, listamiembros);
                 });
             }
@@ -120,7 +118,7 @@ module.exports = function (Usuario) {
             }
         })
     };
-    
+
 
 
 };
