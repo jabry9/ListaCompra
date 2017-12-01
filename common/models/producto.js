@@ -6,24 +6,16 @@ module.exports = function (Producto) {
         var userId = context.req.accessToken.userId;
         var Usuario = Producto.app.models.Usuario;
 
-
-
         Usuario.findById(userId, function (err, usuario) {
-            
-            context.args.where = Producto.addVerificadoFilter(context.args.where, usuario.PerteneceId);
-            
-            context.args.data = { "Comprar": false};
-            console.log(context.args.where);
+            // Vamos a añadir o modificar el filtro llamando a una funcion
+            context.args.where = Producto.addListaFilter(context.args.where, usuario.PerteneceId);
+            // Vamos a poner que ya estan comprados los productos
+            //context.args.data = { "Comprar": false};
             next();
-        }); 
+        });
 
-
-
-
-
-
-        Producto.addVerificadoFilter = function (filter, idlista) {
-            //console.log(filter);
+        // En esta funcion se añade o se crea el filtro correspondiente para que los cambios afecten unicamente la lista a la que pertenece
+        Producto.addListaFilter = function (filter, idlista) {
             if (filter) {
                 var filterJSON = filter;
                 filterJSON = {
@@ -34,12 +26,11 @@ module.exports = function (Producto) {
                 filter = filterJSON;
             } else {
                 filter = {
-                        "listaFamiliarId": idlista
+                    "listaFamiliarId": idlista
                 };
             }
-            //console.log(filter);
             return filter;
         }
-        
+
     });
 };
